@@ -7,13 +7,25 @@ describe('Mvn search', function() {
         var artifacts = [];
         return maven.search('junit', (element) => { 
             artifacts.push(element.id);
-            // console.log(`Added ${element.id}`)
         })
         .then(() => {
-            // console.log('Done!!!!!')
-            assert.equal(artifacts.length, 5);
+          console.log(`Artifacts: ${artifacts}`)
+          assert.equal(artifacts.length, 5);
         })
-      //assert.equal([1, 2, 3].indexOf(4), -1);
+    });
+  });
+
+  describe('gav', function() {
+    it('should return 1 package', function() {
+      var artifacts = [];
+      return maven.search('g:org.junit.jupiter AND a:junit-jupiter-api AND v:5.8.2', (element) => {
+        console.log(`${element}`);
+        artifacts.push(element.id);
+      })
+      .then(() => {
+        console.log(`Artifacts: ${artifacts}`)
+        assert.equal(artifacts.length, 1);
+      })
     });
   });
 });
